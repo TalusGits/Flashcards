@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Flashcard Set</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/build.css">
+</head>
+<body>
+    <header>
+        <h1>Create Your Flashcard Set</h1>
+    </header>
+    <main>
+        <form id="flashcard-form">
+            <div class="set-name">
+                <label for="set-name">Set Name:</label>
+                <input type="text" id="set-name" name="set-name" required>
+            </div>
+            <div class="qa-pair">
+                <div class="question">
+                    <label for="question-1">Question:</label>
+                    <textarea id="question-1" name="question-1" rows="3" required></textarea>
+                </div>
+                <div class="answer">
+                    <label for="answer-1">Answer:</label>
+                    <textarea id="answer-1" name="answer-1" rows="3" required></textarea>
+                </div>
+            </div>
+            <button type="button" id="add-pair">+</button>
+            <button type="submit" id="save-set">Save</button>
+        </form>
+    </main>
+    <script src="/build.js"></script>
+</body>
+</html>

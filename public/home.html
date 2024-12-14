@@ -5,32 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/home.css">
 </head>
 <body>
     <header>
         <h1>Welcome, <span id="user-name">User</span>!</h1>
     </header>
     <main>
-        <p>Your flashcard sets will appear here.</p>
+        <div class="controls">
+            <button id="plus-button">+</button>
+            <div id="dropdown" class="hidden">
+                <a href="/build.html">Build</a>
+                <a href="/select">Select</a>
+            </div>
+        </div>
+        <div class="flashcard-sets">
+            <!-- Flashcard set divs will be dynamically inserted here -->
+        </div>
     </main>
-    <script>
-        // Fetch email from URL parameters
-        const email = window.location.pathname.split('/dashboard/')[1];
-
-        // Fetch user data dynamically
-        fetch(`/user/${email}`)
-            .then(response => {
-                if (!response.ok) throw new Error('User not found');
-                return response.json();
-            })
-            .then(user => {
-                // Update the UI with the user's name
-                document.getElementById('user-name').textContent = user.name;
-            })
-            .catch(err => {
-                console.error('Error fetching user data:', err);
-                document.querySelector('h1').textContent = 'Welcome, User!';
-            });
-    </script>
+    <script src="/home.js"></script>
 </body>
 </html>
