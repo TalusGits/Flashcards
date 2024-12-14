@@ -55,25 +55,32 @@ main {
 #dropdown a:hover {
     background-color: #f0f0f0;
 }
-
 .flashcard-sets {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column; /* Arrange items vertically */
+    width: 100%; /* Make the container full width */
     gap: 15px;
 }
 
-.flashcard {
-    width: 100px;
-    height: 100px;
-    border: 1px solid #ccc;
+.flashcard-set {
     display: flex;
-    justify-content: center;
+    justify-content: space-between; /* Space out the name and buttons */
     align-items: center;
-    cursor: pointer;
+    width: 100%; /* Make each flashcard set full width */
+    padding: 10px;
+    border: 1px solid #ccc;
     background-color: #f9f9f9;
 }
 
-.flashcard:hover {
+.flashcard-set:hover {
     background-color: #e0e0e0;
+}
+
+.set-name {
+    flex-grow: 1; /* Allow the name to take up remaining space */
+}
+
+button.edit-button,
+button.delete-button {
+    margin-left: 10px;
 }
