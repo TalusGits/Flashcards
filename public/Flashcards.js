@@ -1,79 +1,122 @@
 document.addEventListener('DOMContentLoaded', () => {
     const flashcardDiv = document.getElementById('flashcard');
-    const toggleButton = document.getElementById('toggle-button');
     const prevButton = document.getElementById('prev-button');
     const nextButton = document.getElementById('next-button');
+    const revealButton = document.getElementById('reveal-button');
     const doneButton = document.getElementById('done-button');
 
     let flashcards = [];
     let currentIndex = 0;
     let showingQuestion = true;
 
-    // Fetch flashcards data (replace '/api/flashcards' with your actual API endpoint)
-    fetch('/api/flashcards')
-        .then(response => response.json())
-        .then(data => {
-            flashcards = data;
-            if (flashcards.length > 0) {
-                displayFlashcard();
-            } else {
-                flashcardDiv.textContent = 'No flashcards available.';
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching flashcards:', error);
-            flashcardDiv.textContent = 'Error loading flashcards.';
-        });
-
-    function displayFlashcard() {
+    // Function to display the current flashcard
+    const displayFlashcard = () => {
+        if (flashcards.length === 0) {
+            flashcardDiv.textContent = 'No flashcards available.';
+            return;
+        }
         const currentCard = flashcards[currentIndex];
         flashcardDiv.textContent = showingQuestion ? currentCard.question : currentCard.answer;
-    }
+    };
 
-    toggleButton.addEventListener('click', () => {
+    // Fetch the flashcard set data
+    const fetchFlashcardSet = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const setId = urlParams.get('setId');
+        if (!setId) {
+            flashcardDiv.textContent = 'No flashcards available.';
+            return;
+        }
+
+        fetch(`/flashcards/${setId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch flashcard set data.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                flashcards = data.cards;
+                currentIndex = 0;
+                showingQuestion = true;
+                displayFlashcard();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                flashcardDiv.textContent = 'Failed to load flashcards.';
+            });
+    };
+
+    // Event listeners for button clicks
+    revealButton.addEventListener('click', () => {
         showingQuestion = !showingQuestion;
         displayFlashcard();
-    });
-
-    prevButton.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + flashcards.length) % flashcards.length;
-        showingQuestion = true;
-        displayFlashcard();
+        setActiveButton(revealButton);
     });
 
     nextButton.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % flashcards.length;
-        showingQuestion = true;
-        displayFlashcard();
+        if (flashcards.length > 0) {
+            currentIndex = (currentIndex + 1) % flashcards.length;
+            showingQuestion = true;
+            displayFlashcard();
+            setActiveButton(nextButton);
+        }
     });
 
-doneButton.addEventListener('click', async () => {
-    try {
-        // Fetch session data to get user info
-        const response = await fetch('/session-check');
-        const data = await response.json();
-
-        if (data.loggedIn && data.user && data.user.email) {
-            const userEmail = encodeURIComponent(data.user.email);
-            window.location.href = `/dashboard/${userEmail}`;
-        } else {
-            alert('Session expired or user not logged in.');
-            window.location.href = '/login'; // Redirect to login page or appropriate route
+    prevButton.addEventListener('click', () => {
+        if (flashcards.length > 0) {
+            currentIndex = (currentIndex - 1 + flashcards.length) % flashcards.length;
+            showingQuestion = true;
+            displayFlashcard();
+            setActiveButton(prevButton);
         }
-    } catch (error) {
-        console.error('Error fetching session data:', error);
-        alert('An error occurred. Please try again.');
-    }
-});
+    });
 
+    doneButton.addEventListener('click', () => {
+        // Fetch the user's email from the session
+        fetch('/session-check')
+            .then(response => response.json())
+            .then(data => {
+                if (data.loggedIn && data.user && data.user.email) {
+                    const userEmail = encodeURIComponent(data.user.email);
+                    window.location.href = `/dashboard/${userEmail}`;
+                } else {
+                    alert('Session expired or user not logged in.');
+                    window.location.href = '/login'; // Redirect to login page or appropriate route
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+    });
+
+    // Keyboard event listener
     document.addEventListener('keydown', (event) => {
-        if (event.code === 'Space') {
-            event.preventDefault();
-            toggleButton.click();
-        } else if (event.code === 'ArrowLeft') {
-            prevButton.click();
-        } else if (event.code === 'ArrowRight') {
-            nextButton.click();
+        switch (event.key) {
+            case 'ArrowLeft':
+                prevButton.click();
+                break;
+            case 'ArrowRight':
+                nextButton.click();
+                break;
+            case ' ':
+                event.preventDefault(); // Prevent default spacebar behavior (scrolling)
+                revealButton.click();
+                break;
         }
     });
+
+    // Function to set the active button class
+    const setActiveButton = (button) => {
+        // Remove active class from all navigation buttons
+        [prevButton, nextButton, revealButton].forEach(btn => btn.classList.remove('active'));
+        // Add active class to the specified button
+        button.classList.add('active');
+        // Remove active class after a short delay
+        setTimeout(() => button.classList.remove('active'), 200);
+    };
+
+    // Initialize the flashcards
+    fetchFlashcardSet();
 });

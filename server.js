@@ -96,6 +96,15 @@ app.get('/flashcards', async (req, res) => {
         console.error('Error retrieving flashcard sets:', error); // Log error
         res.status(500).send({ error: error.message });
     }
+
+    const { setId } = req.params;
+    if (req.session.user) {
+        console.log(`Serving Flashcards page for set: ${setId}`); // Log access
+        res.sendFile(path.join(__dirname, 'public', 'Flashcards.html'));
+    } else {
+        console.log(`Unauthorized access attempt to flashcard set: ${setId}`); // Log unauthorized access
+        res.status(401).send('Unauthorized');
+    }
 });
 
 // Route to delete a flashcard set
