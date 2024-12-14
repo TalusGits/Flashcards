@@ -58,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check if there's a setId in the URL
     const urlParams = new URLSearchParams(window.location.search);
     const setId = urlParams.get('setId');
-
     if (setId) {
         // Fetch the flashcard set data
         fetch(`/flashcards/${setId}`)
@@ -71,6 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 // Populate the form with the fetched data
                 document.getElementById('set-name').value = data.name;
+                // Clear any existing pairs
+                const existingPairs = document.querySelectorAll('.qa-pair');
+                existingPairs.forEach(pair => form.removeChild(pair));
+                // Add pairs from the fetched data
                 data.cards.forEach(card => {
                     addQuestionAnswerPair(card.question, card.answer);
                 });
@@ -79,6 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Error:', error);
                 alert('An error occurred while loading the flashcard set for editing.');
             });
+    } else {
+        // If no setId, add one empty question-answer pair by default
+        addQuestionAnswerPair();
     }
 
     // Function to handle form submission
