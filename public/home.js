@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const plusButton = document.getElementById('plus-button');
     const dropdown = document.getElementById('dropdown');
     const userNameSpan = document.getElementById('user-name');
-    const flashcardSetsContainer = document.querySelector('.flashcard-sets');
+    const flashcardSetsContainer = document.getElementById('flashcard-sets');
+    const flashcardSetTemplate = document.getElementById('flashcard-set-template').content;
 
     // Toggle dropdown visibility
     plusButton.addEventListener('click', () => {
@@ -16,34 +17,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Fetch email from URL parameters
-    const email = window.location.pathname.split('/dashboard/')[1];
+    // Fetch session data to get user info
+    fetch('/session-check')
+        .then(response => response.json())
+        .then(data => {
+            if (data.loggedIn && data.user) {
+                const email = data.user.email;
+                userNameSpan.textContent = data.user.name;
 
-    // Fetch user data dynamically
-    fetch(`/user/${email}`)
-        .then(response => {
-            if (!response.ok) throw new Error('User not found');
-            return response.json();
-        })
-        .then(user => {
-            // Update the UI with the user's name
-            userNameSpan.textContent = user.name;
+                // Fetch flashcard sets for the user
+                fetch(`/flashcards?email=${encodeURIComponent(email)}`)
+                    .then(response => response.json())
+                    .then(flashcardSets => {
+                        flashcardSets.forEach(set => {
+                            const flashcardSetElement = document.importNode(flashcardSetTemplate, true);
+                            flashcardSetElement.querySelector('.set-name').textContent = set.name;
 
-            // Populate flashcard sets
-            const flashcardSets = user.progress; // Assuming 'progress' contains flashcard sets
-            for (const setName in flashcardSets) {
-                const flashcardDiv = document.createElement('div');
-                flashcardDiv.classList.add('flashcard');
-                flashcardDiv.textContent = setName;
-                flashcardDiv.addEventListener('click', () => {
-                    // Handle flashcard set click
-                    console.log(`Clicked on ${setName}`);
-                });
-                flashcardSetsContainer.appendChild(flashcardDiv);
+                            // Edit button functionality
+                            flashcardSetElement.querySelector('.edit-button').addEventListener('click', () => {
+                                window.location.href = `/build.html?setId=${set._id}`;
+                            });
+
+                            // Delete button functionality
+                            flashcardSetElement.querySelector('.delete-button').addEventListener('click', () => {
+                                if (confirm(`Are you sure you want to delete the flashcard set "${set.name}"?`)) {
+                                    fetch(`/flashcards/${set._id}`, {
+                                        method: 'DELETE',
+                                    })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            flashcardSetElement.remove();
+                                        } else {
+                                            alert('Failed to delete the flashcard set.');
+                                        }
+                                    });
+                                }
+                            });
+
+                            flashcardSetsContainer.appendChild(flashcardSetElement);
+                        });
+                    });
+            } else {
+                window.location.href = '/login';
             }
         })
         .catch(err => {
-            console.error('Error fetching user data:', err);
-            document.querySelector('h1').textContent = 'Welcome, User!';
+            console.error('Error fetching session data:', err);
+            window.location.href = '/login';
         });
 });
