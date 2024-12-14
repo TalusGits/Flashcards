@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         removeButton.textContent = 'Remove';
         removeButton.addEventListener('click', () => {
             form.removeChild(qaPairDiv);
+            logCurrentFlashcards(); // Log the current state after removal
         });
 
         qaPairDiv.appendChild(questionDiv);
@@ -50,6 +51,25 @@ document.addEventListener('DOMContentLoaded', () => {
         qaPairDiv.appendChild(removeButton);
 
         form.insertBefore(qaPairDiv, addPairButton);
+
+        logCurrentFlashcards(); // Log the current state after addition
+    };
+
+    // Function to log the current state of flashcards
+    const logCurrentFlashcards = () => {
+        const flashcards = [];
+        document.querySelectorAll('.qa-pair').forEach((qaPairDiv) => {
+            const questionElement = qaPairDiv.querySelector('.question textarea');
+            const answerElement = qaPairDiv.querySelector('.answer textarea');
+            if (questionElement && answerElement) {
+                const question = questionElement.value.trim();
+                const answer = answerElement.value.trim();
+                if (question || answer) {
+                    flashcards.push({ question, answer });
+                }
+            }
+        });
+        console.log('Current flashcards:', flashcards);
     };
 
     // Event listener for adding a new question-answer pair
@@ -77,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 data.cards.forEach(card => {
                     addQuestionAnswerPair(card.question, card.answer);
                 });
+                logCurrentFlashcards(); // Log after loading the set
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -98,17 +119,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const flashcards = [];
-        for (let i = 1; i <= pairCount; i++) {
-            const questionElement = document.getElementById(`question-${i}`);
-            const answerElement = document.getElementById(`answer-${i}`);
+        document.querySelectorAll('.qa-pair').forEach((qaPairDiv) => {
+            const questionElement = qaPairDiv.querySelector('.question textarea');
+            const answerElement = qaPairDiv.querySelector('.answer textarea');
             if (questionElement && answerElement) {
                 const question = questionElement.value.trim();
                 const answer = answerElement.value.trim();
-                if (question && answer) {
+                if (question || answer) {
                     flashcards.push({ question, answer });
                 }
             }
-        }
+        });
 
         if (flashcards.length === 0) {
             alert('Please add at least one question-answer pair.');
