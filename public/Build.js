@@ -97,9 +97,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             alert('Flashcard set saved successfully!');
-            window.location.href = '/dashboard';
+
+            // Fetch the user's email from the session
+            const sessionResponse = await fetch('/session-check');
+            const sessionData = await sessionResponse.json();
+
+            if (sessionData.loggedIn && sessionData.user && sessionData.user.email) {
+                const userEmail = encodeURIComponent(sessionData.user.email);
+                window.location.href = `/dashboard/${userEmail}`;
+            } else {
+                alert('Session expired or user not logged in.');
+                window.location.href = '/login'; // Redirect to login page or appropriate route
+            }
         } catch (error) {
-            console.error('Error saving flashcards:', error);
+            console.error('Error:', error);
         }
     });
 });

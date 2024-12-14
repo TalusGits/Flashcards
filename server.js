@@ -49,7 +49,12 @@ app.use(express.static('public'));
 app.post('/login', (req, res) => {
     const { email, name } = req.body;
     req.session.user = { email, name };
-    res.send({ message: 'Login successful', user: { email, name } });
+    req.session.save((err) => {
+        if (err) {
+            return res.status(500).send({ error: 'Failed to save session' });
+        }
+        res.send({ message: 'Login successful', user: { email, name } });
+    });
 });
 
 // Route to check session and return user info
@@ -96,7 +101,8 @@ app.delete('/flashcards/:id', async (req, res) => {
 
 // Route to serve the dashboard page
 app.get('/dashboard/:email', (req, res) => {
-    if (req.session.user && req.session.user.email === req.params.email) {
+    const { email } = req.params;
+    if (req.session.user && req.session.user.email === email) {
         res.sendFile(path.join(__dirname, 'public', 'home.html'));
     } else {
         res.status(401).send('Unauthorized');
