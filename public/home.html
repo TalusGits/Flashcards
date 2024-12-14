@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome, <span id="user-name">User</span>!</h1>
+    </header>
+    <main>
+        <p>Your flashcard sets will appear here.</p>
+    </main>
+    <script>
+        // Fetch email from URL parameters
+        const email = window.location.pathname.split('/dashboard/')[1];
+
+        // Fetch user data dynamically
+        fetch(`/user/${email}`)
+            .then(response => {
+                if (!response.ok) throw new Error('User not found');
+                return response.json();
+            })
+            .then(user => {
+                // Update the UI with the user's name
+                document.getElementById('user-name').textContent = user.name;
+            })
+            .catch(err => {
+                console.error('Error fetching user data:', err);
+                document.querySelector('h1').textContent = 'Welcome, User!';
+            });
+    </script>
+</body>
+</html>
