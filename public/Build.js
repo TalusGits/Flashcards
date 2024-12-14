@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('flashcard-form');
     const addPairButton = document.getElementById('add-pair');
-    let pairCount = 1;
+    let pairCount = 0;
 
     // Function to add a new question-answer pair
-    addPairButton.addEventListener('click', () => {
+    const addQuestionAnswerPair = (question = '', answer = '') => {
         pairCount++;
         const qaPairDiv = document.createElement('div');
         qaPairDiv.classList.add('qa-pair');
@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         questionTextarea.name = `question-${pairCount}`;
         questionTextarea.rows = 3;
         questionTextarea.required = true;
+        questionTextarea.value = question;
         questionDiv.appendChild(questionLabel);
         questionDiv.appendChild(questionTextarea);
 
@@ -32,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         answerTextarea.name = `answer-${pairCount}`;
         answerTextarea.rows = 3;
         answerTextarea.required = true;
+        answerTextarea.value = answer;
         answerDiv.appendChild(answerLabel);
         answerDiv.appendChild(answerTextarea);
 
@@ -48,7 +50,36 @@ document.addEventListener('DOMContentLoaded', () => {
         qaPairDiv.appendChild(removeButton);
 
         form.insertBefore(qaPairDiv, addPairButton);
-    });
+    };
+
+    // Event listener for adding a new question-answer pair
+    addPairButton.addEventListener('click', () => addQuestionAnswerPair());
+
+    // Check if there's a setId in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const setId = urlParams.get('setId');
+
+    if (setId) {
+        // Fetch the flashcard set data
+        fetch(`/flashcards/${setId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch flashcard set data.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Populate the form with the fetched data
+                document.getElementById('set-name').value = data.name;
+                data.cards.forEach(card => {
+                    addQuestionAnswerPair(card.question, card.answer);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while loading the flashcard set for editing.');
+            });
+    }
 
     // Function to handle form submission
     form.addEventListener('submit', async (event) => {
@@ -84,8 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await fetch('/flashcards', {
-                method: 'POST',
+            const method = setId ? 'PUT' : 'POST';
+            const endpoint = setId ? `/flashcards/${setId}` : '/flashcards';
+
+            const response = await fetch(endpoint, {
+                method,
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(flashcardSet),
             });
