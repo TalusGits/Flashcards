@@ -17,52 +17,62 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Fetch session data to get user info
-    fetch('/session-check')
-        .then(response => response.json())
-        .then(data => {
-            if (data.loggedIn && data.user) {
-                const email = data.user.email;
-                userNameSpan.textContent = data.user.name;
+    // Function to fetch and render flashcard sets
+    const fetchAndRenderFlashcardSets = () => {
+        // Clear existing flashcard sets
+        flashcardSetsContainer.innerHTML = '';
 
-                // Fetch flashcard sets for the user
-                fetch(`/flashcards?email=${encodeURIComponent(email)}`)
-                    .then(response => response.json())
-                    .then(flashcardSets => {
-                        flashcardSets.forEach(set => {
-                            const flashcardSetElement = document.importNode(flashcardSetTemplate, true);
-                            flashcardSetElement.querySelector('.set-name').textContent = set.name;
+        // Fetch session data to get user info
+        fetch('/session-check')
+            .then(response => response.json())
+            .then(data => {
+                if (data.loggedIn && data.user) {
+                    const email = data.user.email;
+                    userNameSpan.textContent = data.user.name;
 
-                            // Edit button functionality
-                            flashcardSetElement.querySelector('.edit-button').addEventListener('click', () => {
-                                window.location.href = `/build.html?setId=${set._id}`;
+                    // Fetch flashcard sets for the user
+                    fetch(`/flashcards?email=${encodeURIComponent(email)}`)
+                        .then(response => response.json())
+                        .then(flashcardSets => {
+                            flashcardSets.forEach(set => {
+                                const flashcardSetElement = document.importNode(flashcardSetTemplate, true);
+                                flashcardSetElement.querySelector('.set-name').textContent = set.name;
+
+                                // Edit button functionality
+                                flashcardSetElement.querySelector('.edit-button').addEventListener('click', () => {
+                                    window.location.href = `/build.html?setId=${set._id}`;
+                                });
+
+                                // Delete button functionality
+                                flashcardSetElement.querySelector('.delete-button').addEventListener('click', () => {
+                                    if (confirm(`Are you sure you want to delete the flashcard set "${set.name}"?`)) {
+                                        fetch(`/flashcards/${set._id}`, {
+                                            method: 'DELETE',
+                                        })
+                                        .then(response => {
+                                            if (response.ok) {
+                                                // Re-fetch and re-render flashcard sets after deletion
+                                                fetchAndRenderFlashcardSets();
+                                            } else {
+                                                alert('Failed to delete the flashcard set.');
+                                            }
+                                        });
+                                    }
+                                });
+
+                                flashcardSetsContainer.appendChild(flashcardSetElement);
                             });
-
-                            // Delete button functionality
-                            flashcardSetElement.querySelector('.delete-button').addEventListener('click', () => {
-                                if (confirm(`Are you sure you want to delete the flashcard set "${set.name}"?`)) {
-                                    fetch(`/flashcards/${set._id}`, {
-                                        method: 'DELETE',
-                                    })
-                                    .then(response => {
-                                        if (response.ok) {
-                                            flashcardSetElement.remove();
-                                        } else {
-                                            alert('Failed to delete the flashcard set.');
-                                        }
-                                    });
-                                }
-                            });
-
-                            flashcardSetsContainer.appendChild(flashcardSetElement);
                         });
-                    });
-            } else {
+                } else {
+                    window.location.href = '/login';
+                }
+            })
+            .catch(err => {
+                console.error('Error fetching session data:', err);
                 window.location.href = '/login';
-            }
-        })
-        .catch(err => {
-            console.error('Error fetching session data:', err);
-            window.location.href = '/login';
-        });
+            });
+    };
+
+    // Initial fetch and render of flashcard sets
+    fetchAndRenderFlashcardSets();
 });
