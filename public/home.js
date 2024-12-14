@@ -32,37 +32,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Fetch flashcard sets for the user
                     fetch(`/flashcards?email=${encodeURIComponent(email)}`)
-                        .then(response => response.json())
-                        .then(flashcardSets => {
-                            flashcardSets.forEach(set => {
-                                const flashcardSetElement = document.importNode(flashcardSetTemplate, true);
-                                flashcardSetElement.querySelector('.set-name').textContent = set.name;
-
-                                // Edit button functionality
-                                flashcardSetElement.querySelector('.edit-button').addEventListener('click', () => {
-                                    window.location.href = `/build.html?setId=${set._id}`;
-                                });
-
-                                // Delete button functionality
-                                flashcardSetElement.querySelector('.delete-button').addEventListener('click', () => {
-                                    if (confirm(`Are you sure you want to delete the flashcard set "${set.name}"?`)) {
-                                        fetch(`/flashcards/${set._id}`, {
-                                            method: 'DELETE',
-                                        })
-                                        .then(response => {
-                                            if (response.ok) {
-                                                // Re-fetch and re-render flashcard sets after deletion
-                                                fetchAndRenderFlashcardSets();
-                                            } else {
-                                                alert('Failed to delete the flashcard set.');
-                                            }
-                                        });
-                                    }
-                                });
-
-                                flashcardSetsContainer.appendChild(flashcardSetElement);
+                    .then(response => response.json())
+                    .then(flashcardSets => {
+                        flashcardSets.forEach(set => {
+                            const flashcardSetElement = document.importNode(flashcardSetTemplate, true);
+                            flashcardSetElement.querySelector('.set-name').textContent = set.name;
+        
+                            // Open set button functionality
+                            flashcardSetElement.querySelector('.open-set-button').addEventListener('click', () => {
+                                window.location.href = `/flashcards.html?setId=${set._id}`;
                             });
+        
+                            // Edit button functionality
+                            flashcardSetElement.querySelector('.edit-button').addEventListener('click', (event) => {
+                                event.stopPropagation(); // Prevent triggering the open-set-button click
+                                window.location.href = `/build.html?setId=${set._id}`;
+                            });
+        
+                            // Delete button functionality
+                            flashcardSetElement.querySelector('.delete-button').addEventListener('click', (event) => {
+                                event.stopPropagation(); // Prevent triggering the open-set-button click
+                                if (confirm(`Are you sure you want to delete the flashcard set "${set.name}"?`)) {
+                                    fetch(`/flashcards/${set._id}`, {
+                                        method: 'DELETE',
+                                    })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            fetchAndRenderFlashcardSets();
+                                        } else {
+                                            alert('Failed to delete the flashcard set.');
+                                        }
+                                    });
+                                }
+                            });
+        
+                            flashcardSetsContainer.appendChild(flashcardSetElement);
                         });
+                    });
                 } else {
                     window.location.href = '/login';
                 }
