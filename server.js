@@ -32,6 +32,35 @@ app.get('/user/:email', (req, res) => {
     }
 });
 
+app.get('/dashboard/:email', (req, res) => {
+    const email = req.params.email;
+    const user = users[email];
+
+    if (user) {
+        res.send(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Dashboard</title>
+                <link rel="stylesheet" href="/styles.css">
+            </head>
+            <body>
+                <header>
+                    <h1>Welcome, ${user.name}!</h1>
+                </header>
+                <main>
+                    <p>Your flashcard sets will appear here.</p>
+                </main>
+            </body>
+            </html>
+        `);
+    } else {
+        res.status(404).send("User not found");
+    }
+});
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);

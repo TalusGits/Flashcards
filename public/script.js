@@ -1,6 +1,5 @@
-// Handle Google Login
 function handleCredentialResponse(response) {
-    const data = jwt_decode(response.credential);
+    const data = jwt_decode(response.credential); // jwt_decode is now globally available
     console.log("User Info:", data);
 
     // Send user info to the backend
@@ -10,9 +9,12 @@ function handleCredentialResponse(response) {
         body: JSON.stringify({ email: data.email, name: data.name }),
     })
     .then((res) => res.json())
-    .then((data) => {
-        console.log(data);
-        alert(`Welcome, ${data.user.name}!`);
+    .then(() => {
+        // Redirect to the user's personalized page
+        window.location.href = `/dashboard/${data.email}`;
+    })
+    .catch((error) => {
+        console.error("Login failed:", error);
     });
 }
 
