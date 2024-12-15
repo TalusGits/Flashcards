@@ -86,36 +86,35 @@ app.get('/session-check', (req, res) => {
 
 // Route to save a flashcard set
 app.post('/flashcards', async (req, res) => {
-    if (!req.session.user) {
-        return res.status(401).send({ error: 'Unauthorized' });
-    }
-
     try {
         const { name, cards } = req.body;
+
+        if (!req.session.user) {
+            return res.status(401).send({ error: 'User not logged in' });
+        }
+
         const newSet = new FlashcardSet({
             name,
             cards,
-            user: req.session.user._id, // Associate with the logged-in user
+            user: req.session.user._id, // Assign ownership
         });
+
         await newSet.save();
-        res.status(201).send({ message: 'Flashcard set saved successfully', set: newSet });
+        res.status(201).send({ message: 'Flashcard set created', set: newSet });
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        console.error('Error saving flashcard set:', error);
+        res.status(500).send({ error: error.message });
     }
 });
 
 // Route to get all flashcard sets
 app.get('/flashcards', async (req, res) => {
-    if (!req.session.user) {
-        console.log('Unauthorized access attempt to flashcards');
-        return res.status(401).send({ error: 'Unauthorized' });
-    }
-
-    console.log('Session user:', req.session.user);
-
     try {
+        if (!req.session.user) {
+            return res.status(401).send({ error: 'User not logged in' });
+        }
+
         const sets = await FlashcardSet.find({ user: req.session.user._id });
-        console.log(`Retrieved flashcard sets for user ${req.session.user.email}: ${JSON.stringify(sets)}`);
         res.send(sets);
     } catch (error) {
         console.error('Error retrieving flashcard sets:', error);
@@ -235,22 +234,22 @@ app.post('/view/:id', async (req, res) => {
 
 // Route to get a flashcard set by ID
 app.get('/flashcards/:id', async (req, res) => {
-    if (!req.session.user) {
-        return res.status(401).send({ error: 'Unauthorized' });
-    }
-
     try {
-        const flashcardSet = await FlashcardSet.findOne({
-            _id: req.params.id,
-            user: req.session.user._id, // Ensure the user owns the set
-        });
+        const setId = req.params.id;
 
-        if (!flashcardSet) {
-            return res.status(404).send({ error: 'Flashcard set not found or unauthorized' });
+        const set = await FlashcardSet.findById(setId).populate('user');
+        if (!set) {
+            return res.status(404).send({ error: 'Flashcard set not found' });
         }
 
-        res.send(flashcardSet);
+        // Allow access if the user owns the set or if it is published
+        if (set.published || (req.session.user && String(set.user._id) === req.session.user._id)) {
+            res.send(set);
+        } else {
+            res.status(403).send({ error: 'Access denied' });
+        }
     } catch (error) {
+        console.error('Error retrieving flashcard set:', error);
         res.status(500).send({ error: error.message });
     }
 });
