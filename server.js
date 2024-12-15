@@ -147,25 +147,24 @@ app.delete('/flashcards/:id', async (req, res) => {
 
 // Route to update a flashcard set by ID
 app.put('/flashcards/:id', async (req, res) => {
-    if (!req.session.user) {
-        return res.status(401).send({ error: 'Unauthorized' });
-    }
-
     try {
+        const setId = req.params.id;
         const { name, cards } = req.body;
-        const updatedSet = await FlashcardSet.findOneAndUpdate(
-            { _id: req.params.id, user: req.session.user._id }, // Ensure the user owns the set
-            { name, cards },
-            { new: true, runValidators: true }
-        );
 
-        if (!updatedSet) {
-            return res.status(404).send({ error: 'Flashcard set not found or unauthorized' });
+        const set = await FlashcardSet.findById(setId);
+        if (!set) {
+            return res.status(404).send({ error: 'Flashcard set not found.' });
         }
 
-        res.send({ message: 'Flashcard set updated successfully', set: updatedSet });
+        // Allow updates while keeping the published status
+        set.name = name;
+        set.cards = cards;
+
+        await set.save();
+        res.send({ message: 'Flashcard set updated successfully.', set });
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        console.error('Error updating flashcard set:', error);
+        res.status(500).send({ error: error.message });
     }
 });
 
@@ -178,6 +177,59 @@ app.get('/dashboard/:email', (req, res) => {
     } else {
         console.log(`Unauthorized access attempt to dashboard: email=${email}`); // Log unauthorized access
         res.status(401).send('Unauthorized');
+    }
+});
+// Mark a flashcard set as published
+app.post('/publish/:id', async (req, res) => {
+    try {
+        const setId = req.params.id;
+        const updatedSet = await FlashcardSet.findByIdAndUpdate(
+            setId,
+            { published: true },
+            { new: true }
+        );
+
+        if (!updatedSet) {
+            return res.status(404).send({ error: 'Flashcard set not found' });
+        }
+
+        res.send({ message: 'Set published successfully', set: updatedSet });
+    } catch (error) {
+        console.error('Error publishing flashcard set:', error);
+        res.status(500).send({ error: error.message });
+    }
+});
+app.get('/published-flashcards', async (req, res) => {
+    try {
+        const sets = await FlashcardSet.find({ published: true });
+        res.send(sets);
+    } catch (error) {
+        console.error('Error retrieving published flashcard sets:', error);
+        res.status(500).send({ error: error.message });
+    }
+});
+
+app.post('/view/:id', async (req, res) => {
+    try {
+        const setId = req.params.id;
+        const set = await FlashcardSet.findById(setId);
+
+        if (!set) {
+            return res.status(404).send({ error: 'Flashcard set not found' });
+        }
+
+        if (!set.published) {
+            return res.status(400).send({ error: 'Cannot increment views for unpublished flashcard sets.' });
+        }
+
+        // Increment views only for published sets
+        set.viewers += 1;
+        await set.save();
+
+        res.send({ message: 'Viewer count updated', viewers: set.viewers });
+    } catch (error) {
+        console.error('Error updating viewer count:', error);
+        res.status(500).send({ error: error.message });
     }
 });
 

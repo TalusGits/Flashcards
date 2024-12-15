@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('flashcard-form');
     const addPairButton = document.getElementById('add-pair');
+    const publishButton = document.createElement('button'); // Create a Publish button
+    publishButton.type = 'button';
+    publishButton.textContent = 'Publish';
+    publishButton.id = 'publish-set';
+    form.appendChild(publishButton); // Append the Publish button to the form
     let pairCount = 0;
 
     // Function to add a new question-answer pair
@@ -88,30 +93,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(data => {
-                // Populate the form with the fetched data
                 document.getElementById('set-name').value = data.name;
-                // Clear any existing pairs
+
+                // Clear existing pairs and populate the form with fetched data
                 const existingPairs = document.querySelectorAll('.qa-pair');
                 existingPairs.forEach(pair => form.removeChild(pair));
-                // Add pairs from the fetched data
                 data.cards.forEach(card => {
                     addQuestionAnswerPair(card.question, card.answer);
                 });
-                logCurrentFlashcards(); // Log after loading the set
+                logCurrentFlashcards();
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('An error occurred while loading the flashcard set for editing.');
+                alert('An error occurred while loading the flashcard set.');
             });
     } else {
-        // If no setId, add one empty question-answer pair by default
-        addQuestionAnswerPair();
+        addQuestionAnswerPair(); // Add one empty question-answer pair by default
     }
 
-    // Function to handle form submission
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-
+    // Function to save the flashcard set
+    const saveFlashcardSet = async (redirectToPublishing = false) => {
         const setName = document.getElementById('set-name').value.trim();
         if (!setName) {
             alert('Please enter a name for the flashcard set.');
@@ -136,10 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const flashcardSet = {
-            name: setName,
-            cards: flashcards,
-        };
+        const flashcardSet = { name: setName, cards: flashcards };
 
         try {
             const method = setId ? 'PUT' : 'POST';
@@ -157,21 +155,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            const result = await response.json();
             alert('Flashcard set saved successfully!');
 
-            // Fetch the user's email from the session
-            const sessionResponse = await fetch('/session-check');
-            const sessionData = await sessionResponse.json();
-
-            if (sessionData.loggedIn && sessionData.user && sessionData.user.email) {
-                const userEmail = encodeURIComponent(sessionData.user.email);
-                window.location.href = `/dashboard/${userEmail}`;
+            if (redirectToPublishing) {
+                window.location.href = `/publishing.html?setId=${result._id || setId}`;
             } else {
-                alert('Session expired or user not logged in.');
-                window.location.href = '/login'; // Redirect to login page or appropriate route
+                // Redirect to dashboard
+                const sessionResponse = await fetch('/session-check');
+                const sessionData = await sessionResponse.json();
+
+                if (sessionData.loggedIn && sessionData.user && sessionData.user.email) {
+                    const userEmail = encodeURIComponent(sessionData.user.email);
+                    window.location.href = `/dashboard/${userEmail}`;
+                } else {
+                    alert('Session expired or user not logged in.');
+                    window.location.href = '/login';
+                }
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error saving flashcard set:', error);
         }
+    };
+
+    // Event listener for the save button
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        saveFlashcardSet(false); // Save and redirect to dashboard
+    });
+
+    // Event listener for the publish button
+    publishButton.addEventListener('click', () => {
+        saveFlashcardSet(true); // Save and redirect to publishing page
     });
 });

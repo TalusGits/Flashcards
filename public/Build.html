@@ -6,6 +6,7 @@
     <title>Build Flashcard Set</title>
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/build.css">
+    <script defer src="/build.js"></script> <!-- External JavaScript -->
 </head>
 <body>
     <header>
@@ -17,20 +18,11 @@
                 <label for="set-name">Set Name:</label>
                 <input type="text" id="set-name" name="set-name" required>
             </div>
-            <div class="qa-pair">
-                <div class="question">
-                    <label for="question-1">Question:</label>
-                    <textarea id="question-1" name="question-1" rows="3" required></textarea>
-                </div>
-                <div class="answer">
-                    <label for="answer-1">Answer:</label>
-                    <textarea id="answer-1" name="answer-1" rows="3" required></textarea>
-                </div>
-            </div>
+            <!-- Question-answer pairs will be dynamically added by JavaScript -->
             <button type="button" id="add-pair">+</button>
             <button type="submit" id="save-set">Save</button>
+            <!-- Publish button will also be added dynamically -->
         </form>
     </main>
-    <script src="/build.js"></script>
 </body>
 </html>

@@ -19,7 +19,9 @@ const flashcardSchema = new mongoose.Schema({
 const flashcardSetSchema = new mongoose.Schema({
     name: { type: String, required: true },
     cards: [flashcardSchema],
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Reference to the user
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    published: { type: Boolean, default: false }, // New field
+    viewers: { type: Number, default: 0 }, // Track viewers
 });
 
 // Define the user schema

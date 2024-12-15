@@ -37,35 +37,47 @@ document.addEventListener('DOMContentLoaded', () => {
                         flashcardSets.forEach(set => {
                             const flashcardSetElement = document.importNode(flashcardSetTemplate, true);
                             flashcardSetElement.querySelector('.set-name').textContent = set.name;
-        
+                        
+                            // Handle the view count for published sets
+                            if (set.published) {
+                                const viewCountElement = flashcardSetElement.querySelector('.view-count');
+                                if (viewCountElement) {
+                                    viewCountElement.textContent = `Views: ${set.viewers || 0}`;
+                                }
+                            } else {
+                                // Hide the view count for unpublished sets
+                                const viewCountElement = flashcardSetElement.querySelector('.view-count');
+                                if (viewCountElement) {
+                                    viewCountElement.textContent = '';
+                                }
+                            }
+                        
                             // Open set button functionality
                             flashcardSetElement.querySelector('.open-set-button').addEventListener('click', () => {
                                 window.location.href = `/flashcards.html?setId=${set._id}`;
                             });
-        
+                        
                             // Edit button functionality
                             flashcardSetElement.querySelector('.edit-button').addEventListener('click', (event) => {
                                 event.stopPropagation(); // Prevent triggering the open-set-button click
                                 window.location.href = `/build.html?setId=${set._id}`;
                             });
-        
+                        
                             // Delete button functionality
                             flashcardSetElement.querySelector('.delete-button').addEventListener('click', (event) => {
                                 event.stopPropagation(); // Prevent triggering the open-set-button click
                                 if (confirm(`Are you sure you want to delete the flashcard set "${set.name}"?`)) {
-                                    fetch(`/flashcards/${set._id}`, {
-                                        method: 'DELETE',
-                                    })
-                                    .then(response => {
-                                        if (response.ok) {
-                                            fetchAndRenderFlashcardSets();
-                                        } else {
-                                            alert('Failed to delete the flashcard set.');
-                                        }
-                                    });
+                                    fetch(`/flashcards/${set._id}`, { method: 'DELETE' })
+                                        .then(response => {
+                                            if (response.ok) {
+                                                fetchAndRenderFlashcardSets(); // Re-fetch and render sets after deletion
+                                            } else {
+                                                alert('Failed to delete the flashcard set.');
+                                            }
+                                        });
                                 }
                             });
-        
+                        
                             flashcardSetsContainer.appendChild(flashcardSetElement);
                         });
                     });
