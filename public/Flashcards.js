@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextButton = document.getElementById('next-button');
     const revealButton = document.getElementById('reveal-button');
     const doneButton = document.getElementById('done-button');
+    const setNameDiv = document.getElementById('set-name'); // For displaying the set name in the top-left corner
 
     let flashcards = [];
     let currentIndex = 0;
@@ -19,12 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
         flashcardDiv.textContent = showingQuestion ? currentCard.question : currentCard.answer;
     };
 
-    // Fetch the flashcard set data
+    // Fetch the flashcard set data and set name
     const fetchFlashcardSet = () => {
         const urlParams = new URLSearchParams(window.location.search);
         const setId = urlParams.get('setId');
         if (!setId) {
             flashcardDiv.textContent = 'No flashcards available.';
+            setNameDiv.textContent = 'Set Name: Unknown';
             return;
         }
 
@@ -36,6 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(data => {
+                // Set the flashcard set name
+                setNameDiv.textContent = `Set Name: ${data.name}`;
                 flashcards = data.cards;
                 currentIndex = 0;
                 showingQuestion = true;
@@ -44,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => {
                 console.error('Error:', error);
                 flashcardDiv.textContent = 'Failed to load flashcards.';
+                setNameDiv.textContent = 'Set Name: Error';
             });
     };
 

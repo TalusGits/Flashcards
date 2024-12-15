@@ -87,3 +87,14 @@ main {
 #reveal-button.active {
     background-color: #1e7e34;
 }
+/* Ensure the set-name is positioned in the top-left corner */
+.set-name {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #3c3c3c; /* Dark gray color for text */
+    padding: 5px 10px; /* Add some padding for spacing */
+    z-index: 1000; /* Ensure it stays above other elements */
+}
