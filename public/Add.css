@@ -58,3 +58,18 @@ main {
 .published-set .view-button:hover {
     background-color: #0056b3;
 }
+
+#back-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#back-button:hover {
+    background-color: #0056b3;
+}

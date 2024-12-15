@@ -1,5 +1,26 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const container = document.getElementById('published-sets');
+    const backButton = document.getElementById('back-button'); // Select the Back button
+
+    // Back button functionality
+    backButton.addEventListener('click', () => {
+        // Fetch the user's email from the session
+        fetch('/session-check')
+            .then(response => response.json())
+            .then(data => {
+                if (data.loggedIn && data.user && data.user.email) {
+                    const userEmail = encodeURIComponent(data.user.email);
+                    window.location.href = `/dashboard/${userEmail}`;
+                } else {
+                    alert('Session expired or user not logged in.');
+                    window.location.href = '/login'; // Redirect to login page or appropriate route
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+    });
 
     try {
         const response = await fetch('/published-flashcards');
@@ -19,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <p>Viewers: <span>${set.viewers || 0}</span></p>
             `;
 
-            // Increment views and redirect to game version
+            // Increment views and redirect to the game version
             setDiv.addEventListener('click', async () => {
                 try {
                     const viewResponse = await fetch(`/view/${set._id}`, { method: 'POST' });
@@ -39,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             container.appendChild(setDiv);
         });
     } catch (error) {
-        console.error('Error loading published flashcards:', error);
+        console.error('Error loading published flashcard sets:', error);
         alert('Failed to load flashcards.');
     }
 });
