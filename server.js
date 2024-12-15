@@ -6,7 +6,7 @@ const { FlashcardSet, User } = require('./db'); // Import User model
 const path = require('path');
 const morgan = require('morgan'); // Import morgan middleware
 const app = express();
-const PORT = 3000;
+const PORT = 3000 || process.env.PORT;
 
 // MongoDB connection
 const uri = 'mongodb+srv://githubaccesselias:OmicronPersei8@cluster.zj9v7.mongodb.net/Flashcards?retryWrites=true&w=majority';
@@ -257,4 +257,5 @@ app.get('/flashcards/:id', async (req, res) => {
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
