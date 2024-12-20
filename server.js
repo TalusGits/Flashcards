@@ -231,7 +231,42 @@ app.post('/view/:id', async (req, res) => {
         res.status(500).send({ error: error.message });
     }
 });
+app.post('/duplicate-flashcard-set/:id', async (req, res) => {
+    try {
+        // Ensure the user is logged in
+        if (!req.session.user) {
+            return res.status(401).send({ error: 'User not logged in.' });
+        }
 
+        const setId = req.params.id;
+
+        // Fetch the original flashcard set
+        const originalSet = await FlashcardSet.findById(setId);
+        if (!originalSet) {
+            return res.status(404).send({ error: 'Flashcard set not found.' });
+        }
+
+        // Ensure the user is not duplicating their own set
+        if (String(originalSet.user) === String(req.session.user._id)) {
+            return res.status(403).send({ error: 'You cannot duplicate your own set.' });
+        }
+
+        // Create a duplicate flashcard set for the logged-in user
+        const duplicatedSet = new FlashcardSet({
+            name: `${originalSet.name} (Copy)`,
+            cards: originalSet.cards,
+            user: req.session.user._id,
+            published: false, // Mark the duplicated set as unpublished
+        });
+
+        await duplicatedSet.save();
+
+        res.status(201).send(duplicatedSet);
+    } catch (error) {
+        console.error('Error duplicating flashcard set:', error);
+        res.status(500).send({ error: 'Failed to duplicate flashcard set.' });
+    }
+});
 // Route to get a flashcard set by ID
 app.get('/flashcards/:id', async (req, res) => {
     try {

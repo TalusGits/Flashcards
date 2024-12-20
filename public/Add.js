@@ -3,24 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const backButton = document.getElementById('back-button'); // Select the Back button
 
     // Back button functionality
-    backButton.addEventListener('click', () => {
-        // Fetch the user's email from the session
-        fetch('/session-check')
-            .then(response => response.json())
-            .then(data => {
-                if (data.loggedIn && data.user && data.user.email) {
-                    const userEmail = encodeURIComponent(data.user.email);
-                    window.location.href = `/dashboard/${userEmail}`;
-                } else {
-                    alert('Session expired or user not logged in.');
-                    window.location.href = '/login'; // Redirect to login page or appropriate route
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again.');
-            });
-    });
+    backButton.addEventListener('click', redirectToDashboard);
 
     try {
         const response = await fetch('/published-flashcards');
@@ -39,6 +22,34 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <h2>${set.name}</h2>
                 <p>Viewers: <span>${set.viewers || 0}</span></p>
             `;
+
+            // "Save to Dashboard" button
+            const saveButton = document.createElement('button');
+            saveButton.textContent = 'Save to Dashboard';
+            saveButton.classList.add('save-button');
+
+            // Save to dashboard functionality
+            saveButton.addEventListener('click', async (event) => {
+                event.stopPropagation(); // Prevent triggering the setDiv click
+                try {
+                    const duplicateResponse = await fetch(`/duplicate-flashcard-set/${set._id}`, {
+                        method: 'POST',
+                    });
+
+                    if (!duplicateResponse.ok) {
+                        const errorData = await duplicateResponse.json();
+                        throw new Error(errorData.error || 'Failed to save flashcard set to dashboard.');
+                    }
+
+                    alert('Flashcard set successfully saved to your dashboard!');
+                    redirectToDashboard();
+                } catch (error) {
+                    console.error('Error duplicating flashcard set:', error);
+                    alert(error.message);
+                }
+            });
+
+            setDiv.appendChild(saveButton);
 
             // Increment views and redirect to the game version
             setDiv.addEventListener('click', async () => {
@@ -64,3 +75,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         alert('Failed to load flashcards.');
     }
 });
+
+// Redirect to dashboard functionality
+async function redirectToDashboard() {
+    try {
+        const sessionResponse = await fetch('/session-check');
+        const sessionData = await sessionResponse.json();
+
+        if (sessionData.loggedIn && sessionData.user && sessionData.user.email) {
+            const userEmail = encodeURIComponent(sessionData.user.email);
+            window.location.href = `/dashboard/${userEmail}`;
+        } else {
+            alert('Session expired. Redirecting to login.');
+            window.location.href = '/login';
+        }
+    } catch (error) {
+        console.error('Error checking session:', error);
+        window.location.href = '/login';
+    }
+}
