@@ -1,12 +1,25 @@
+/* Apply Google Fonts to the body and title */
 body {
+    font-family: "Roboto Condensed", sans-serif;
+    color: white; /* All text will be white */
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #49a7d4; /* Background color for the body */
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: Arial, sans-serif;
+    justify-content: flex-start;
+    overflow-x: hidden; /* Ensure the page doesn't exceed the width */
 }
 
 header {
+    font-family: "Big Shoulders Stencil", sans-serif;
+    font-size: 2.5em; /* Smaller header text */
     margin-top: 20px;
+    text-align: center;
+    color: white; /* Header text in white */
 }
 
 main {
@@ -15,16 +28,22 @@ main {
     align-items: center;
     width: 100%;
     margin-top: 30px;
+    padding: 0 30px;
 }
 
+/* Form styles */
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80%;
+    width: 100%;
     max-width: 600px;
+    border-radius: 12px;
+    padding: 20px;
+    background-color: #49a7d4;
 }
 
+/* Style for the Set Name field */
 .set-name {
     width: 100%;
     margin-bottom: 20px;
@@ -38,51 +57,112 @@ form {
 
 .set-name input {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 8px; /* Smaller padding */
+    font-size: 1em; /* Smaller text size */
+    border: none;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    color: black;
 }
 
+/* Style for buttons */
+button {
+    font-size: 16px; /* Smaller text size for buttons */
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 12px;
+    border: none;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+button:hover {
+    opacity: 1;
+}
+
+#add-pair {
+    background-color: #64bce4;
+    color: white;
+}
+
+#add-pair:hover {
+    background-color: #3590ce;
+}
+
+#save-set {
+    background-color: #64bce4;
+    color: white;
+}
+
+#save-set:hover {
+    background-color: #3590ce;
+}
+
+/* Center the question and answer pair */
 .qa-pair {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Spread out the Question, Answer, and Remove button */
     width: 100%;
+    max-width: 800px; /* Max width for alignment */
     margin-bottom: 20px;
+    gap: 15px; /* Add space between Question and Answer fields */
+    align-items: center; /* Vertically center the content */
 }
 
-.question, .answer {
-    width: 48%;
+/* Styling for Question and Answer text input divs */
+.qa-pair .question, .qa-pair .answer {
+    width: 48%; /* Makes both divs almost equal width */
+    padding: 10px;
+    border-radius: 12px;
+    background-color: white;
+    color: black;
+    font-size: 1em;
+    box-sizing: border-box; /* Ensures padding does not affect width */
 }
 
-label {
+/* Adjust margins to add space between Question and Answer */
+.qa-pair .question {
+    margin-right: 10px;
+}
+
+/* Style for labels inside the Question and Answer fields */
+.qa-pair label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
 }
 
+/* Remove button positioned to the side */
+.remove-button {
+    background-color: #f44336; /* Red color for remove button */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    width: auto; /* Adjust width */
+}
+
+/* Hover effect for remove button */
+.remove-button:hover {
+    background-color: #d32f2f;
+    opacity: 1;
+}
+
+/* Make the remove button have no border */
+.remove-button:focus {
+    outline: none;
+}
+
+
+/* Style for the question-answer textarea (if added dynamically) */
 textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 12px;
+    background-color: white;
+    color: black;
+    font-size: 1em;
     resize: vertical;
-}
-
-button {
-    font-size: 18px;
-    padding: 10px 20px;
-    margin: 10px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-}
-
-#add-pair {
-    background-color: #4CAF50;
-    color: white;
-}
-
-#save-set {
-    background-color: #008CBA;
-    color: white;
 }
