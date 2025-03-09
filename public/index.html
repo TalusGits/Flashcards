@@ -4,25 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Flashcard Game</title>
+    <title>BOX TOPICS</title>
     <link rel="icon" type="image/png" sizes="16x16" href="FAV1.png">
     <link rel="icon" type="image/png" sizes="32x32" href="FAV2.png">
     <link rel="icon" type="image/png" sizes="192x192" href="FAV3.png">
     <link rel="icon" type="image/png" sizes="512x512" href="FAV4.png">
     <link rel="apple-touch-icon" href="FAV5.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil:opsz@10..72&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- This will be the background grid container -->
+    <div id="box"></div>
+
     <div id="app">
         <header>
-            <h1>Flashcard Game</h1>
-            <button id="google-login">Login with Google</button>
+            <h1 class="big-shoulders-stencil">BOX TOPICS</h1>
+            <p class="roboto-condensed">For students, by students.</p>
+            <button id="google-login">Sign in with Google</button>
         </header>
         <main id="game-area">
             <!-- Flashcards go here -->
         </main>
     </div>
+
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
     <script src="script.js"></script>
-    </body>
+
+    <!-- Use type="module" for JavaScript module -->
+    <script type="module">
+        // Import the GridArrayBg class from the module file
+        import { GridArrayBg } from './GridArrayBg.module.js';  // Adjust the path if needed
+        
+        // Initialize the GridArrayBg for background
+        let colorbg = new GridArrayBg({
+            dom: "box",  // The ID of the div you want the background applied to
+            colors: ["#0a5fa6","#4aaad5","#009bd6","#EEEFEA","#64bce4","#4ab4ed"], // The colors for the grid background
+            loop: true  // Enable looping of the grid animation
+        });
+    </script>
+</body>
 </html>
