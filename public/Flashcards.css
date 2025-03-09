@@ -1,27 +1,64 @@
+/* General Body Styling */
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     margin: 0;
     height: 100vh;
+    background-color: #f9f9f9;
+    color: white; /* Make all text white */
 }
 
+/* Header Styling */
 header {
     width: 100%;
     display: flex;
     justify-content: flex-end;
     padding: 10px;
-    background-color: #f8f8f8;
+    background-color: #49a7d4;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+header h1 {
+    font-family: 'Big Shoulders Stencil', sans-serif; /* Big text font */
+    font-size: 3rem; /* Make title text large */
+    margin: 0;
+    color: white;
+    text-align: center;
 }
 
 #done-button {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    background-color: #64bce4;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+    margin-left: 20px;
 }
 
+#done-button:hover {
+    background-color: #3590ce;
+    opacity: 1;
+}
+
+/* Set name styling */
+.set-name {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    padding: 5px 10px;
+    z-index: 1000;
+}
+
+/* Main Content Styling */
 main {
     display: flex;
     flex-direction: column;
@@ -31,6 +68,7 @@ main {
     width: 100%;
 }
 
+/* Container for Navigation Buttons and Flashcard */
 .button-container {
     display: flex;
     align-items: center;
@@ -47,13 +85,14 @@ main {
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    border-radius: 12px;
+    transition: background-color 0.3s, opacity 0.3s;
+    opacity: 0.8;
 }
 
-.nav-button:active,
-.nav-button.active {
-    background-color: #0056b3;
+.nav-button:hover {
+    background-color: #3590ce;
+    opacity: 1;
 }
 
 #flashcard {
@@ -66,9 +105,9 @@ main {
     text-align: center;
     font-size: 24px;
     border: 2px solid #ccc;
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 20px;
-    background-color: #fff;
+    background-color: #64bce4; /* Blue color for divs */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -79,22 +118,41 @@ main {
     background-color: #28a745;
     color: white;
     border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    border-radius: 12px;
+    transition: background-color 0.3s, opacity 0.3s;
+    opacity: 0.8;
 }
 
-#reveal-button:active,
-#reveal-button.active {
+#reveal-button:hover {
     background-color: #1e7e34;
+    opacity: 1;
 }
-/* Ensure the set-name is positioned in the top-left corner */
-.set-name {
-    position: absolute;
-    top: 10px;
-    left: 15px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #3c3c3c; /* Dark gray color for text */
-    padding: 5px 10px; /* Add some padding for spacing */
-    z-index: 1000; /* Ensure it stays above other elements */
+
+/* Ensure the page width does not exceed screen size */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem; /* Adjust header size on smaller screens */
+    }
+
+    #flashcard {
+        width: 80%;
+        font-size: 20px; /* Adjust font size for smaller screens */
+    }
+
+    .nav-button {
+        font-size: 14px; /* Reduce button size for small screens */
+    }
+
+    #reveal-button {
+        font-size: 14px; /* Adjust reveal button size */
+    }
 }
