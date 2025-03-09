@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil:opsz@10..72&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/home.css">
     <link rel="icon" type="image/png" sizes="16x16" href="/FAV1.png">
@@ -14,14 +17,14 @@
 </head>
 <body>
     <header>
-        <h1>Welcome, <span id="user-name">User</span>!</h1>
+        <h1 class="big-shoulders-stencil-unique">Welcome, <span id="user-name">User</span>!</h1>
     </header>
     <main>
         <div class="controls">
-            <button id="plus-button">+</button>
+            <button id="plus-button" class="roboto-condensed-unique">+</button>
             <div id="dropdown" class="hidden">
-                <a href="/build.html">Build</a>
-                <a href="/add.html">Add</a>
+                <a href="/build.html" class="roboto-condensed-unique">Build</a>
+                <a href="/add.html" class="roboto-condensed-unique">Add</a>
             </div>
         </div>
         <div class="flashcard-sets" id="flashcard-sets">
@@ -37,9 +40,9 @@
                     <span class="set-name"></span>
                 </button>
                 <div class="action-buttons">
-                    <button class="edit-button">Edit</button>
-                    <span class="view-count"></span>
-                    <button class="delete-button">Delete</button>
+                    <button class="edit-button roboto-condensed-unique">Edit</button>
+                    <span class="view-count roboto-condensed-unique"></span>
+                    <button class="delete-button roboto-condensed-unique">Delete</button>
                 </div>
             </div>
         </template>

@@ -1,98 +1,185 @@
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: Arial, sans-serif;
-}
-
-header {
-    margin-top: 20px;
-}
-
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-top: 30px;
-}
-
-.controls {
-    position: relative;
-    margin-bottom: 20px;
-}
-
-#plus-button {
-    font-size: 24px;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-#dropdown {
-    position: absolute;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #ccc;
-    background-color: white;
-    width: 150px;
-    z-index: 10;
-}
-
-#dropdown.hidden {
-    display: none;
-}
-
-#dropdown a {
-    text-decoration: none;
-    color: black;
-    padding: 10px;
-    text-align: center;
-}
-
-#dropdown a:hover {
-    background-color: #f0f0f0;
-}
-.flashcard-sets {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 15px;
-}
-
-.flashcard-set {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-}
-
-.open-set-button {
-    flex-grow: 1;
-    background: none;
-    border: none;
-    text-align: left;
-    padding: 0;
-    cursor: pointer;
-}
-
-.open-set-button .set-name {
-    display: block;
-    width: 100%;
-    padding: 10px;
-}
-
-.action-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.edit-button,
-.delete-button {
-    margin-left: 10px;
-}
+/* Link to fonts */
+.big-shoulders-stencil-unique {
+    font-family: "Big Shoulders Stencil", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 4em; /* Make welcome text 4x bigger */
+  }
+  
+  .roboto-condensed-unique {
+    font-family: "Roboto Condensed", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400; /* Change weight as needed */
+    font-style: normal;
+  }
+  
+  body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background-color: #49a7d4;
+      margin: 0;
+      padding: 0;
+      color: white;
+  }
+  
+  header {
+      margin-top: 20px;
+      text-align: center;
+  }
+  
+  main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: calc(100% - 60px); /* 30px margin on each side */
+      margin-top: 30px;
+      margin-left: 30px;
+      margin-right: 30px;
+  }
+  
+  .controls {
+      position: relative;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+  }
+  
+  #plus-button {
+      font-size: 24px;
+      padding: 15px;
+      cursor: pointer;
+      opacity: 0.8;
+      border-radius: 12px;
+      background-color: #64bce4;
+      color: white;
+      width: 100%;
+      border: none;
+  }
+  
+  #plus-button:hover {
+      opacity: 1;
+      background-color: #3590ce;
+  }
+  
+  #dropdown {
+      position: absolute;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      width: 150px;
+      border-radius: 12px;
+      z-index: 10;
+  }
+  
+  #dropdown.hidden {
+      display: none;
+  }
+  
+  #dropdown a {
+      text-decoration: none;
+      color: #49a7d4;
+      padding: 10px;
+      text-align: center;
+      border-radius: 12px;
+  }
+  
+  #dropdown a:hover {
+      background-color: #f0f0f0;
+  }
+  
+  .flashcard-sets {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .flashcard-set {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 10px;
+      background-color: #64bce4;
+      border-radius: 12px;
+      color: white;
+      margin-bottom: 15px;
+      justify-content: center;
+      position: relative;
+      transition: background-color 0.3s ease; /* Smooth color transition on hover */
+  }
+  
+  .flashcard-set:hover {
+      background-color: #3e9dd5; /* Change to #3e9dd5 on hover */
+  }
+  
+  /* Prevent flashcard hover effect from applying when hovering over buttons */
+  .flashcard-set:hover .edit-button,
+  .flashcard-set:hover .delete-button,
+  .flashcard-set:hover .view-count {
+      background-color: transparent; /* Ensure the buttons and view count don't inherit the hover background */
+  }
+  
+  .open-set-button {
+      flex-grow: 1;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 0;
+      cursor: pointer;
+      font-size: 18px;
+      color: white;
+  }
+  
+  .open-set-button .set-name {
+      display: block;
+      width: 100%;
+      padding: 10px;
+  }
+  
+  .action-buttons {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+  }
+  
+  .edit-button,
+  .delete-button {
+      margin-left: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      opacity: 0.8;
+      border-radius: 12px;
+      background-color: #4ab4ed; /* Make them initially #4ab4ed */
+      color: white;
+      border: none;
+  }
+  
+  .edit-button:hover,
+  .delete-button:hover {
+      opacity: 1;
+      background-color: #3590ce;
+  }
+  
+  .edit-button,
+  .delete-button {
+      font-family: "Roboto Condensed", sans-serif;
+  }
+  
+  /* View count between edit and delete buttons */
+  .view-count {
+      font-size: 16px;
+      color: white;
+      margin: 0 15px; /* Space between buttons */
+  }
+  
