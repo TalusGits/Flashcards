@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publish Flashcard Set</title>
-    <link rel="stylesheet" href="/styles.css">
+    <!-- Add the Google Fonts links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil:opsz@10..72&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- Link to your external CSS -->
+    <link rel="stylesheet" href="/publishing.css">
     <script defer src="/publishing.js"></script> <!-- Link the publishing.js -->
     <link rel="icon" type="image/png" sizes="16x16" href="FAV1.png">
     <link rel="icon" type="image/png" sizes="32x32" href="FAV2.png">
@@ -14,14 +20,14 @@
 </head>
 <body>
     <header>
-        <h1 id="set-title">Flashcard Set</h1>
+        <h1 id="set-title" class="big-shoulders-stencil-unique">Flashcard Set</h1>
     </header>
     <main>
         <div id="flashcards-container">
             <!-- Flashcards will be dynamically added here -->
         </div>
-        <button id="publish-confirm">Publish</button>
-        <button id="cancel">Cancel</button>
+        <button id="publish-confirm" class="roboto-condensed-unique">Publish</button>
+        <button id="cancel" class="roboto-condensed-unique">Cancel</button>
     </main>
 </body>
 </html>
