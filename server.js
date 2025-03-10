@@ -6,7 +6,7 @@ const { FlashcardSet, User } = require('./db'); // Import User model
 const path = require('path');
 const morgan = require('morgan'); // Import morgan middleware
 const app = express();
-const PORT = 3000 || process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 // MongoDB connection
 const uri = 'mongodb+srv://githubaccesselias:OmicronPersei8@cluster.zj9v7.mongodb.net/Flashcards?retryWrites=true&w=majority';
