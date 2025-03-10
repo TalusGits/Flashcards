@@ -9,7 +9,7 @@ body {
 
 /* Header Styling */
 header {
-    background-color: #0a5fa6;
+    background-color: #009bd6;
     color: white;
     padding: 1em;
     text-align: center;
@@ -28,7 +28,7 @@ header h1 {
 /* Back and Save Buttons */
 #back-button,
 .save-button {
-    background-color: #3590ce;
+    background-color: #4aaad5;
     color: white;
     border: none;
     border-radius: 12px;
@@ -41,7 +41,7 @@ header h1 {
 
 #back-button:hover,
 .save-button:hover {
-    background-color: #64bce4;
+    background-color: #008cc4;
 }
 
 /* Main Content Styling */
@@ -90,7 +90,7 @@ main {
 
 /* View Button */
 .published-set .view-button {
-    background-color: #64bce4;
+    background-color: #009bd6;
     color: white;
     border: none;
     border-radius: 12px;

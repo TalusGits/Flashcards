@@ -25,11 +25,18 @@
       color: white;
   }
   
-  
+
   header {
-      margin-top: 20px;
-      text-align: center;
-  }
+    margin-top: 20px;
+    text-align: center;
+    background-color: #009bd6;
+    width: 90%; /* Makes it wider */
+    max-width: 1200px; /* Ensures it doesn't stretch too much */
+    border-radius: 12px; /* Rounded corners */
+    padding: 1em; /* Adds padding for better spacing */
+    margin-left: auto; /* Centers the header */
+    margin-right: auto;
+}
   
   main {
       display: flex;
@@ -55,7 +62,7 @@
       cursor: pointer;
       opacity: 0.8;
       border-radius: 12px;
-      background-color: #64bce4;
+      background-color: #009bd6;
       color: white;
       width: 100%;
       border: none;
