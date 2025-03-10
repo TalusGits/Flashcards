@@ -6,7 +6,7 @@ body {
     font-family: 'Roboto Condensed', sans-serif;
     margin: 0;
     height: 100vh;
-    background-color: #f9f9f9;
+    background-color: #49a7d4;
     color: white; /* Make all text white */
 }
 
@@ -23,7 +23,7 @@ header {
 
 header h1 {
     font-family: 'Big Shoulders Stencil', sans-serif; /* Big text font */
-    font-size: 3rem; /* Make title text large */
+    font-size: 5rem; /* Make title text large */
     margin: 0;
     color: white;
     text-align: center;
@@ -35,7 +35,8 @@ header h1 {
     cursor: pointer;
     border: none;
     border-radius: 12px;
-    background-color: #64bce4;
+    background-color: #0a5fa6;
+    color: white;
     opacity: 0.8;
     transition: opacity 0.3s;
     margin-left: 20px;
@@ -48,11 +49,11 @@ header h1 {
 
 /* Set name styling */
 .set-name {
+    font-family: "Big Shoulders Stencil", sans-serif;
     position: absolute;
     top: 10px;
     left: 15px;
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 1.7rem;
     color: white;
     padding: 5px 10px;
     z-index: 1000;
@@ -82,7 +83,7 @@ main {
     font-size: 16px;
     cursor: pointer;
     margin: 0 20px;
-    background-color: #007bff;
+    background-color: #0a5fa6;
     color: white;
     border: none;
     border-radius: 12px;
@@ -104,10 +105,11 @@ main {
     justify-content: center;
     text-align: center;
     font-size: 24px;
+    color: rgb(0, 0, 0);
     border: 2px solid #ccc;
     border-radius: 12px;
     padding: 20px;
-    background-color: #64bce4; /* Blue color for divs */
+    background-color: #ffffff; /* Blue color for divs */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -115,7 +117,7 @@ main {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #28a745;
+    background-color: #0a5fa6;
     color: white;
     border: none;
     border-radius: 12px;
@@ -124,7 +126,7 @@ main {
 }
 
 #reveal-button:hover {
-    background-color: #1e7e34;
+    background-color: #3590ce;
     opacity: 1;
 }
 

@@ -59,6 +59,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    background-color: #49a7d4;
     max-width: 100vw; /* Ensure the page doesn't exceed the screen width */
     padding: 0 30px; /* 30px margins on each side */
     margin-top: 30px;

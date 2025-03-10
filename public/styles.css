@@ -61,7 +61,7 @@ body {
 #google-login {
     margin-top: 20px;
     padding: 20px 50px;
-    background-color: #0A5FA6;
+    background-color: #0a5fa6;
     color: #4AAAD5;
     border: none;
     font-size: 1.5rem;
@@ -69,14 +69,12 @@ body {
     transition: background-color 0.3s ease, opacity 0.3s ease;
     width: 100%;
     max-width: 500px;
-    opacity: 0.8; /* Make the button less intense */
     border-radius: 12px; /* Round the corners */
 
 }
 
 #google-login:hover {
     background-color: #2a88c7;
-    opacity: 1; /* Full opacity on hover */
 }
 
 /* Responsive Design */

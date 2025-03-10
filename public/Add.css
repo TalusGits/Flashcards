@@ -3,29 +3,32 @@ body {
     font-family: 'Roboto Condensed', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
-    color: white; /* Make all text white */
+    background-color: #49a7d4; /* Background color */
+    color: white;
 }
 
 /* Header Styling */
 header {
-    background-color: #333;
+    background-color: #0a5fa6;
     color: white;
     padding: 1em;
     text-align: center;
-    font-family: 'Big Shoulders Stencil', sans-serif; /* Big text font */
+    font-family: 'Big Shoulders Stencil', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-radius: 12px; /* Rounded header box */
 }
 
 header h1 {
-    font-size: 3rem; /* Make title text large */
+    font-size: 3rem;
     margin: 0;
 }
 
-#back-button {
-    background-color: #64bce4;
+/* Back and Save Buttons */
+#back-button,
+.save-button {
+    background-color: #3590ce;
     color: white;
     border: none;
     border-radius: 12px;
@@ -33,13 +36,12 @@ header h1 {
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s;
-    opacity: 0.8;
-    margin-top: 1em; /* Adds space between title and button */
+    margin-top: 1em;
 }
 
-#back-button:hover {
-    background-color: #3590ce; /* Darker blue on hover */
-    opacity: 1;
+#back-button:hover,
+.save-button:hover {
+    background-color: #64bce4;
 }
 
 /* Main Content Styling */
@@ -49,10 +51,10 @@ main {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 100vw; /* Ensure the page doesn't exceed screen width */
+    max-width: 100vw;
 }
 
-/* Container for Flashcards */
+/* Flashcard Container */
 .flashcard-container {
     display: flex;
     flex-direction: column;
@@ -64,7 +66,7 @@ main {
 
 /* Published Flashcard Set Styling */
 .published-set {
-    background-color: #49a7d4; /* Blue color for divs */
+    background-color: white; /* White background */
     border-radius: 12px; /* Rounded corners */
     padding: 1.5em;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -72,22 +74,23 @@ main {
     max-width: 100%;
 }
 
-/* Styling for Titles and Paragraphs in the Flashcards */
+/* Flashcard Set Title */
 .published-set h2 {
-    margin: 0 0 0.5em;
-    color: white; /* White text for titles */
+    font-family: 'Big Shoulders Stencil', sans-serif; /* Stencil font */
+    color: black;
     font-size: 2rem;
+    margin: 0 0 0.5em;
 }
 
+/* Flashcard Set Paragraphs */
 .published-set p {
-    margin: 0.5em 0;
-    color: white; /* White text for paragraph */
+    color: black;
     font-size: 1.2rem;
 }
 
-/* View Button Styling */
+/* View Button */
 .published-set .view-button {
-    background-color: #64bce4; /* Light blue */
+    background-color: #64bce4;
     color: white;
     border: none;
     border-radius: 12px;
@@ -98,7 +101,7 @@ main {
 }
 
 .published-set .view-button:hover {
-    background-color: #3590ce; /* Darker blue on hover */
+    background-color: #3590ce;
     opacity: 1;
 }
 
@@ -107,15 +110,10 @@ button:focus {
     outline: none;
 }
 
-/* Apply White Text to All Text Elements in Published Cards */
-.published-set p, .published-set h2 {
-    color: white;
-}
-
-/* Make all elements scale responsively to screen width */
+/* Responsive Scaling */
 @media (max-width: 768px) {
     header h1 {
-        font-size: 2rem; /* Reduce title size on smaller screens */
+        font-size: 2rem;
     }
 
     .published-set {
