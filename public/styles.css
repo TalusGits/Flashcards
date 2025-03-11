@@ -58,16 +58,6 @@ body {
 
 /* Button Styles */
 /* Button Styles */
-.google-button-wrapper {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    width: 420px; /* Adjust as needed */
-    padding: 10px;
-    background-color: white; /* White background */
-    border-radius: 12px; /* Match button's rounded corners */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
-}
 
 #google-login {
     margin-top: 20px;
