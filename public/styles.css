@@ -58,7 +58,7 @@ body {
 
 /* Button Styles */
 /* Button Styles */
-#google-login iframe{
+#google-login {
     margin-top: 20px;
     padding: 20px 50px;
     background-color: #0a5fa6;
@@ -71,6 +71,15 @@ body {
     max-width: 500px;
     border-radius: 12px; /* Round the corners */
 
+}
+
+#google-login iframe {
+    display: block;
+    margin: 0 auto; /* Centers the iframe */
+    width: 100%; /* Makes it responsive */
+    max-width: 500px; /* Limits its width */
+    height: 50px; /* Adjust height as needed */
+    border: none; /* Removes any unwanted borders */
 }
 
 #google-login:hover {
