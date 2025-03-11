@@ -71,7 +71,7 @@ body {
     max-width: 500px;
     border-radius: 12px; /* Round the corners */
     display: flex;
-    align-items: center;
+    justify-content: center;
 }
 
 #google-login:hover {
