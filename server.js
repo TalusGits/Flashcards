@@ -40,7 +40,11 @@ app.use(
     })
 );
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/:page', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', req.params.page));
+});
 
 app.post('/login', async (req, res) => {
     const { email, name } = req.body;
@@ -274,3 +278,4 @@ app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
     console.log(`Server is running on port ${PORT}`);
 });
+
