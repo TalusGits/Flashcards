@@ -73,7 +73,12 @@ body {
     display: flex;
     justify-content: center;
 }
-
+.S9gUrf-YoZ4jf {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-left: 100px;
+}
 #google-login:hover {
     background-color: #2a88c7;
 }
