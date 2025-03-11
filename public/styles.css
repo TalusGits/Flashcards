@@ -72,6 +72,7 @@ body {
     border-radius: 12px; /* Round the corners */
     display:flex;
     justify-content: center; /* Center horizontally */
+    width: 400px;
 }
 
 #google-login:hover {
