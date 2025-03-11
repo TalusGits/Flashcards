@@ -60,7 +60,7 @@ body {
 /* Button Styles */
 #google-login {
     margin-top: 20px;
-    padding: 20px 50px;
+    padding: 20px 20px;
     background-color: #0a5fa6;
     color: #4AAAD5;
     border: none;
@@ -70,10 +70,6 @@ body {
     width: 100%;
     max-width: 500px;
     border-radius: 12px; /* Round the corners */
-}
-
-.S9gUrf-YoZ4jf, .S9gUrf-YoZ4jf{
-    margin-left: 100px;
 }
 
 #google-login:hover {
