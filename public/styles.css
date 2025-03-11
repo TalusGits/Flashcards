@@ -74,17 +74,13 @@ body {
     justify-content: center;
     align-items: center;
 }
-
-.S9gUrf-YoZ4jf {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
 #google-login iframe {
-    width: auto !important; 
-    max-width: 400px !important;
+    width: auto; /* Keeps its natural width */
+    max-width: 500px; /* Restricts to a reasonable size */
+    height: auto; /* Adjusts to content */
+    border: none;
 }
+
 
 #google-login:hover {
     background-color: #2a88c7;
