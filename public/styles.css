@@ -70,7 +70,7 @@ body {
     width: 100%;
     max-width: 500px;
     border-radius: 12px; /* Round the corners */
-    justify-content: center;
+    display: flex;
     align-items: center;
 }
 
