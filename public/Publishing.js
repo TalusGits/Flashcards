@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (sessionData.loggedIn && sessionData.user && sessionData.user.email) {
                 const userEmail = encodeURIComponent(sessionData.user.email);
-                window.location.href = `/dashboard/${userEmail}`;
+                window.location.href = `/home.html?email=${data.email}`;
             } else {
                 alert('Session expired. Redirecting to login.');
                 window.location.href = '/login';

@@ -3,7 +3,7 @@ window.onload = function () {
         .then((res) => res.json())
         .then((data) => {
             if (data.loggedIn) {
-                window.location.href = `/dashboard/${data.user.email}`;
+                window.location.href = `/home.html?email=${data.email}`;
             }
         })
         .catch((error) => console.error('Session check failed:', error));

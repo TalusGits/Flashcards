@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (data.loggedIn && data.user && data.user.email) {
                     const userEmail = encodeURIComponent(data.user.email);
-                    window.location.href = `/dashboard/${userEmail}`;
+                    window.location.href = `/home.html?email=${data.email}`;
                 } else {
                     alert('Session expired or user not logged in.');
                     window.location.href = '/login'; 
