@@ -30,7 +30,7 @@ function handleCredentialResponse(response) {
     })
         .then((res) => res.json())
         .then(() => {
-            window.location.href = `/dashboard/${data.email}`;
+            window.location.href = `/home.html?email=${data.email}`;
         })
         .catch((error) => {
             console.error("Login failed:", error);

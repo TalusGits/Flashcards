@@ -39,13 +39,20 @@ app.use(
         cookie: { maxAge: 24 * 60 * 60 * 1000 }, 
     })
 );
-
+//Express Static
+// Serve static files correctly from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/:page', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', req.params.page));
+// Serve specific HTML files only if they exist
+app.get('/*.html', (req, res) => {
+    const filePath = path.join(__dirname, 'public', req.params[0] + '.html');
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            res.status(404).send('Page not found');
+        }
+    });
 });
-
+//express static
 app.post('/login', async (req, res) => {
     const { email, name } = req.body;
 
