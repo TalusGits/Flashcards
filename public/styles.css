@@ -71,16 +71,8 @@ body {
     max-width: 500px;
     border-radius: 12px; /* Round the corners */
 }
-.iframe-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-#google-login iframe {
-    transform: scale(1.2); /* Adjust to make it fit better */
-    transform-origin: center;
+.S9gUrf-YoZ4jf {
+    margin-left: 100px;
 }
 
 #google-login:hover {
