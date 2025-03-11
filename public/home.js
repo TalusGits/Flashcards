@@ -71,12 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     });
                 } else {
-                    window.location.href = '/login';
+                    window.location.href = '/home.html';
                 }
             })
             .catch(err => {
                 console.error('Error fetching session data:', err);
-                window.location.href = '/login';
+                window.location.href = '/home.html';
             });
     };
 

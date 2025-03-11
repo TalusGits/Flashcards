@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.location.href = `/home.html?email=${data.email}`;
                 } else {
                     alert('Session expired or user not logged in.');
-                    window.location.href = '/login';
+                    window.location.href = '/home.html';
                 }
             }
         } catch (error) {
