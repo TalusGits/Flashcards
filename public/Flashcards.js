@@ -4,13 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextButton = document.getElementById('next-button');
     const revealButton = document.getElementById('reveal-button');
     const doneButton = document.getElementById('done-button');
-    const setNameDiv = document.getElementById('set-name'); // For displaying the set name in the top-left corner
+    const setNameDiv = document.getElementById('set-name'); 
 
     let flashcards = [];
     let currentIndex = 0;
     let showingQuestion = true;
 
-    // Function to display the current flashcard
     const displayFlashcard = () => {
         if (flashcards.length === 0) {
             flashcardDiv.textContent = 'No flashcards available.';
@@ -20,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         flashcardDiv.textContent = showingQuestion ? currentCard.question : currentCard.answer;
     };
 
-    // Fetch the flashcard set data and set name
     const fetchFlashcardSet = () => {
         const urlParams = new URLSearchParams(window.location.search);
         const setId = urlParams.get('setId');
@@ -38,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(data => {
-                // Set the flashcard set name
                 setNameDiv.textContent = `Set Name: ${data.name}`;
                 flashcards = data.cards;
                 currentIndex = 0;
@@ -52,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     };
 
-    // Event listeners for button clicks
     revealButton.addEventListener('click', () => {
         showingQuestion = !showingQuestion;
         displayFlashcard();
@@ -78,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     doneButton.addEventListener('click', () => {
-        // Fetch the user's email from the session
         fetch('/session-check')
             .then(response => response.json())
             .then(data => {
@@ -87,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.location.href = `/dashboard/${userEmail}`;
                 } else {
                     alert('Session expired or user not logged in.');
-                    window.location.href = '/login'; // Redirect to login page or appropriate route
+                    window.location.href = '/login'; 
                 }
             })
             .catch(error => {
@@ -96,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
-    // Keyboard event listener
     document.addEventListener('keydown', (event) => {
         switch (event.key) {
             case 'ArrowLeft':
@@ -106,22 +100,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 nextButton.click();
                 break;
             case ' ':
-                event.preventDefault(); // Prevent default spacebar behavior (scrolling)
+                event.preventDefault(); 
                 revealButton.click();
                 break;
         }
     });
 
-    // Function to set the active button class
     const setActiveButton = (button) => {
-        // Remove active class from all navigation buttons
         [prevButton, nextButton, revealButton].forEach(btn => btn.classList.remove('active'));
-        // Add active class to the specified button
         button.classList.add('active');
-        // Remove active class after a short delay
         setTimeout(() => button.classList.remove('active'), 200);
     };
 
-    // Initialize the flashcards
     fetchFlashcardSet();
 });

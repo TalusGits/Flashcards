@@ -1,11 +1,10 @@
-/* Google Fonts Styling */
 .big-shoulders-stencil-unique {
     font-family: "Big Shoulders Stencil", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
     color: white;
-    font-size: 4em; /* Adjust as needed to scale the header */
+    font-size: 4em;
     text-align: center;
 }
   
@@ -17,7 +16,6 @@
     color: white;
 }
   
-/* Applying Roboto font for questions and answers */
 .card p {
     font-family: "Roboto", sans-serif;
     color: white;
@@ -47,13 +45,12 @@ body {
     font-family: Arial, sans-serif;
 }
   
-/* Header box: shorter vertically, longer horizontally */
 header {
     margin-top: 50px;
-    background-color: #009bd6; /* Header box color */
-    padding: 20px;           /* Reduced vertical padding */
-    width: 80%;              /* Increased horizontal length */
-    border-radius: 12px;       /* Rounded corners */
+    background-color: #009bd6; 
+    padding: 20px;           
+    width: 80%;              
+    border-radius: 12px;       
     text-align: center;
 }
   
@@ -81,19 +78,19 @@ button {
     font-weight: 400;
     font-style: normal;
     color: white;
-    background-color: #64bce4; /* Initial button color */
+    background-color: #64bce4; 
     padding: 12px 20px;
     margin: 10px;
-    border-radius: 12px; /* Rounded corners for buttons */
+    border-radius: 12px; 
     border: none;
-    opacity: 0.8; /* Initial opacity */
+    opacity: 0.8; 
     cursor: pointer;
     transition: opacity 0.3s, background-color 0.3s;
 }
   
 button:hover {
-    opacity: 1; /* Full opacity on hover */
-    background-color: #3590ce; /* Darker color on hover */
+    opacity: 1; 
+    background-color: #3590ce; 
 }
   
 .flashcard {
@@ -109,11 +106,10 @@ button:hover {
     background-color: #3e9dd5;
 }
   
-/* Q&A Pair Container: box with background color and rounded corners */
 .qa-pair {
-    background-color: #009bd6;  /* Box color for Q&A pairs */
-    border-radius: 12px;          /* Rounded corners */
-    padding: 20px;                /* Padding inside the box */
+    background-color: #009bd6;  
+    border-radius: 12px;          
+    padding: 20px;                
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -123,7 +119,6 @@ button:hover {
     align-items: center;
 }
   
-/* Inner Question and Answer boxes now use 40% width each */
 .qa-pair .question, .qa-pair .answer {
     width: 40%;
     padding: 10px;

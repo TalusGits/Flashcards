@@ -1,2 +1,2 @@
 # Flashcards
-Flashcard Game
+Thank you for your support!

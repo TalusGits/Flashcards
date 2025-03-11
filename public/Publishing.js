@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search);
     const setId = params.get('setId');
 
-    // Redirect back if no set ID is found
     if (!setId) {
         alert('No flashcard set selected for publishing.');
         redirectToDashboard();
@@ -12,7 +11,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const setTitleElement = document.getElementById('set-title');
     const container = document.getElementById('flashcards-container');
 
-    // Fetch the flashcard set and display it
     try {
         const response = await fetch(`/flashcards/${setId}`);
         if (!response.ok) throw new Error('Failed to fetch flashcard set.');
@@ -35,7 +33,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         redirectToDashboard();
     }
 
-    // Publish the set
     document.getElementById('publish-confirm').addEventListener('click', async () => {
         if (confirm('Are you sure? This will make your set publicly available.')) {
             try {
@@ -51,10 +48,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Cancel publishing and go back to the dashboard
     document.getElementById('cancel').addEventListener('click', redirectToDashboard);
 
-    // Function to redirect to the dashboard
     async function redirectToDashboard() {
         try {
             const sessionResponse = await fetch('/session-check');

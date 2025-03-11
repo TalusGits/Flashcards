@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const container = document.getElementById('published-sets');
-    const backButton = document.getElementById('back-button'); // Select the Back button
+    const backButton = document.getElementById('back-button'); 
 
-    // Back button functionality
     backButton.addEventListener('click', redirectToDashboard);
 
     try {
@@ -23,14 +22,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <p>Viewers: <span>${set.viewers || 0}</span></p>
             `;
 
-            // "Save to Dashboard" button
             const saveButton = document.createElement('button');
             saveButton.textContent = 'Save to Dashboard';
             saveButton.classList.add('save-button');
 
-            // Save to dashboard functionality
             saveButton.addEventListener('click', async (event) => {
-                event.stopPropagation(); // Prevent triggering the setDiv click
+                event.stopPropagation(); 
                 try {
                     const duplicateResponse = await fetch(`/duplicate-flashcard-set/${set._id}`, {
                         method: 'POST',
@@ -51,16 +48,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             setDiv.appendChild(saveButton);
 
-            // Increment views and redirect to the game version
             setDiv.addEventListener('click', async () => {
                 try {
                     const viewResponse = await fetch(`/view/${set._id}`, { method: 'POST' });
                     if (!viewResponse.ok) throw new Error('Failed to update viewer count.');
 
                     const viewData = await viewResponse.json();
-                    setDiv.querySelector('span').textContent = viewData.viewers; // Update view count dynamically
+                    setDiv.querySelector('span').textContent = viewData.viewers; 
 
-                    // Redirect to game version
                     window.location.href = `/flashcards.html?setId=${set._id}`;
                 } catch (error) {
                     console.error('Error updating views:', error);
@@ -76,7 +71,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Redirect to dashboard functionality
 async function redirectToDashboard() {
     try {
         const sessionResponse = await fetch('/session-check');

@@ -1,14 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('flashcard-form');
     const addPairButton = document.getElementById('add-pair');
-    const publishButton = document.createElement('button'); // Create a Publish button
+    const publishButton = document.createElement('button'); 
     publishButton.type = 'button';
     publishButton.textContent = 'Publish';
     publishButton.id = 'publish-set';
-    form.appendChild(publishButton); // Append the Publish button to the form
+    form.appendChild(publishButton); 
     let pairCount = 0;
 
-    // Function to add a new question-answer pair
     const addQuestionAnswerPair = (question = '', answer = '') => {
         pairCount++;
         const qaPairDiv = document.createElement('div');
@@ -42,13 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
         answerDiv.appendChild(answerLabel);
         answerDiv.appendChild(answerTextarea);
 
-        // Button to remove the current question-answer pair
         const removeButton = document.createElement('button');
         removeButton.type = 'button';
         removeButton.textContent = 'Remove';
         removeButton.addEventListener('click', () => {
             form.removeChild(qaPairDiv);
-            logCurrentFlashcards(); // Log the current state after removal
+            logCurrentFlashcards(); 
         });
 
         qaPairDiv.appendChild(questionDiv);
@@ -57,10 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         form.insertBefore(qaPairDiv, addPairButton);
 
-        logCurrentFlashcards(); // Log the current state after addition
+        logCurrentFlashcards(); 
     };
 
-    // Function to log the current state of flashcards
     const logCurrentFlashcards = () => {
         const flashcards = [];
         document.querySelectorAll('.qa-pair').forEach((qaPairDiv) => {
@@ -77,14 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Current flashcards:', flashcards);
     };
 
-    // Event listener for adding a new question-answer pair
     addPairButton.addEventListener('click', () => addQuestionAnswerPair());
 
-    // Check if there's a setId in the URL
     const urlParams = new URLSearchParams(window.location.search);
     const setId = urlParams.get('setId');
     if (setId) {
-        // Fetch the flashcard set data
         fetch(`/flashcards/${setId}`)
             .then(response => {
                 if (!response.ok) {
@@ -95,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 document.getElementById('set-name').value = data.name;
 
-                // Clear existing pairs and populate the form with fetched data
                 const existingPairs = document.querySelectorAll('.qa-pair');
                 existingPairs.forEach(pair => form.removeChild(pair));
                 data.cards.forEach(card => {
@@ -108,10 +101,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('An error occurred while loading the flashcard set.');
             });
     } else {
-        addQuestionAnswerPair(); // Add one empty question-answer pair by default
+        addQuestionAnswerPair();
     }
 
-    // Function to save the flashcard set
     const saveFlashcardSet = async (redirectToPublishing = false) => {
         const setName = document.getElementById('set-name').value.trim();
         if (!setName) {
@@ -161,7 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (redirectToPublishing) {
                 window.location.href = `/publishing.html?setId=${result._id || setId}`;
             } else {
-                // Redirect to dashboard
                 const sessionResponse = await fetch('/session-check');
                 const sessionData = await sessionResponse.json();
 
@@ -178,14 +169,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Event listener for the save button
     form.addEventListener('submit', (event) => {
         event.preventDefault();
-        saveFlashcardSet(false); // Save and redirect to dashboard
+        saveFlashcardSet(false);
     });
 
-    // Event listener for the publish button
     publishButton.addEventListener('click', () => {
-        saveFlashcardSet(true); // Save and redirect to publishing page
+        saveFlashcardSet(true);
     });
 });
