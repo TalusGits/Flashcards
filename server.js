@@ -43,20 +43,14 @@ app.use(
 // Serve static files correctly from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve specific HTML files only if they exist
 app.get('/*.html', (req, res) => {
-    const filePath = path.join(__dirname, 'public', req.path);
+    const filePath = path.join(__dirname, 'public', req.params[0] + '.html');
     res.sendFile(filePath, (err) => {
         if (err) {
             res.status(404).send('Page not found');
         }
     });
 });
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'home.html')); // Fallback for SPA apps
-});
-
 //express static
 app.post('/login', async (req, res) => {
     const { email, name } = req.body;
