@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Flashcard set saved successfully!');
 
             if (redirectToPublishing) {
-                window.location.href = `/publishing.html?setId=${result._id || setId}`;
+                window.location.href = `/Publishing.html?setId=${result._id || setId}`;
             } else {
                 const sessionResponse = await fetch('/session-check');
                 const sessionData = await sessionResponse.json();

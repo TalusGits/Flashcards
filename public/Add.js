@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const viewData = await viewResponse.json();
                     setDiv.querySelector('span').textContent = viewData.viewers; 
 
-                    window.location.href = `/flashcards.html?setId=${set._id}`;
+                    window.location.href = `/Flashcards.html?setId=${set._id}`;
                 } catch (error) {
                     console.error('Error updating views:', error);
                     alert('Failed to open flashcard set.');
