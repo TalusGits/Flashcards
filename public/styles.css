@@ -73,6 +73,7 @@ body {
     display:flex;
     justify-content: center; /* Center horizontally */
     width: 400px;
+    margin: 0 auto;
 }
 
 #google-login:hover {
