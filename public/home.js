@@ -45,12 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                         
                             flashcardSetElement.querySelector('.open-set-button').addEventListener('click', () => {
-                                window.location.href = `/flashcards.html?setId=${set._id}`;
+                                window.location.href = `/Flashcards.html?setId=${set._id}`;
                             });
                         
                             flashcardSetElement.querySelector('.edit-button').addEventListener('click', (event) => {
                                 event.stopPropagation();
-                                window.location.href = `/build.html?setId=${set._id}`;
+                                window.location.href = `/Build.html?setId=${set._id}`;
                             });
                         
                             flashcardSetElement.querySelector('.delete-button').addEventListener('click', (event) => {
