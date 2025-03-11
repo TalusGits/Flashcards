@@ -72,7 +72,7 @@ body {
     border-radius: 12px; /* Round the corners */
 }
 .S9gUrf-YoZ4jf {
-    margin-left: 100px;
+    margin-left: 100px !important;
 }
 
 #google-login:hover {
