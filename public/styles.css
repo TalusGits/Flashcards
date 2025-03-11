@@ -73,15 +73,6 @@ body {
 
 }
 
-#google-login iframe {
-    display: block;
-    margin: 0 auto; /* Centers the iframe */
-    width: 100%; /* Makes it responsive */
-    max-width: 500px; /* Limits its width */
-    height: 50px; /* Adjust height as needed */
-    border: none; /* Removes any unwanted borders */
-}
-
 #google-login:hover {
     background-color: #2a88c7;
 }
