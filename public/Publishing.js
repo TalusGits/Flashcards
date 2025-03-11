@@ -60,11 +60,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 window.location.href = `/home.html?email=${data.email}`;
             } else {
                 alert('Session expired. Redirecting to login.');
-                window.location.href = '/login';
+                window.location.href = '/home.html';
             }
         } catch (error) {
             console.error('Error checking session:', error);
-            window.location.href = '/login';
+            window.location.href = '/home.html';
         }
     }
 });
