@@ -71,6 +71,7 @@ body {
     max-width: 500px;
     border-radius: 12px; /* Round the corners */
     display:flex;
+    justify-content: center; /* Center horizontally */
 }
 div.S9gUrf-YoZ4jf {
     margin-left: 100px !important;
