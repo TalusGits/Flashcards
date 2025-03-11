@@ -73,9 +73,6 @@ body {
     display:flex;
     justify-content: center; /* Center horizontally */
 }
-div.S9gUrf-YoZ4jf {
-    margin-left: 100px !important;
-}
 
 #google-login:hover {
     background-color: #2a88c7;
